@@ -1,0 +1,36 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+[http://schemaspy.sourceforge.net/ SchemaSpy] is a Java program and so can be run in a variety of ways. Details are given below for using it from Ant. SchemaSpy itself delegates to the (non-Java) dot executable from [http://www.graphviz.org/ Graphviz] so that needs to be installed on the machine you are running SchemaSpy on.
+
+= Ant =
+
+This assumes that all the Jar files (and force.properties) are in the folder "schemaspy". The arguments set to "fake" are ones that SchemaSpy insists be present but are not used. The -db and -desc arguments produce text in the output files and so can be changed fairly arbitrarily. The -un and -pw arguments are passed through to the JDBC driver and define the Force.com instance that is connected to. (Note that the -pw argument must be made up of both the password and the security token).
+
+{{{
+<target name="document">
+    <echo message="Generating SchemaSpy documentation (requires Graphviz to be installed to produce diagrams)"/>
+    <delete dir="doc" failonerror="false"/>
+    <java classname="net.sourceforge.schemaspy.Main" fork="true" failonerror="true">
+        <arg line="-t schemaspy/force"/>
+        <arg line="-db Claims"/>
+        <arg line="-un ${sf.username}"/>
+        <arg line="-pw ${sf.password}"/>
+        <arg line="-o doc"/>
+        <arg line="-font Arial"/>
+        <arg line="-fontsize 8"/>
+        <arg line="-hq"/>
+        <arg line="-norows"/>
+        <arg line='-desc "Extracted from ClaimVantage Claims r${env.SVN_REVISION} on Force.com"'/>
+        <arg line="-u fake"/>
+        <arg line="-p fake"/>
+        <arg line="-host fake"/>
+        <classpath>
+             <fileset dir="schemaspy" includes="*.jar"/>
+        </classpath>
+    </java>
+</target>
+}}}
+
+I have provided all the Jars required to connect to Force.com in the XXXX download and also the force.properties file. Download the SchemaSpy Jar from the SchemSpy site.
