@@ -35,7 +35,7 @@ This assumes that all the Jar files (and force.properties) are in the folder "sc
 
 The files required for the schemaspy folder are:
 
- * [http://force-metadata-jdbc-driver.googlecode.com/files/force-metadata-jdbc-driver.jar force-metadata-jdbc-driver.jar] from [http://force-metadata-jdbc-driver.googlecode.com/files/ Downloads]
- * [http://force-metadata-jdbc-driver.googlecode.com/files/force.properties force.properties] from [http://force-metadata-jdbc-driver.googlecode.com/downloads/list Downloads]
- * [http://force-metadata-jdbc-driver.googlecode.com/files/depends.zip depends.zip] from [http://force-metadata-jdbc-driver.googlecode.com/files/ Downloads] (extract the jars)
+ * [http://force-metadata-jdbc-driver.googlecode.com/files/force-metadata-jdbc-driver.jar force-metadata-jdbc-driver.jar] from [http://code.google.com/p/force-metadata-jdbc-driver/downloads/list Downloads]
+ * [http://force-metadata-jdbc-driver.googlecode.com/files/force.properties force.properties] from [http://code.google.com/p/force-metadata-jdbc-driver/downloads/list Downloads]
+ * [http://force-metadata-jdbc-driver.googlecode.com/files/depends.zip depends.zip] from [http://code.google.com/p/force-metadata-jdbc-driver/downloads/list Downloads] (extract the jars)
  * schemaSpy_4.1.1.jar from [http://schemaspy.sourceforge.net/ SchemaSpy]
