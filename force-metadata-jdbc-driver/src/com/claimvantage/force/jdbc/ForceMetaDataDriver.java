@@ -10,7 +10,7 @@ import java.util.Properties;
 
 /**
  * A JDBC driver that wraps the Force.com enterprise web service API to obtain
- * enough information for Schemaspy to be able to create its output.
+ * enough information for SchemaSpy to be able to create its output.
  * So it is just a few methods of DatabaseMetaData that are implemented.
  */
 public class ForceMetaDataDriver implements Driver {
@@ -25,16 +25,16 @@ public class ForceMetaDataDriver implements Driver {
 
         String[] parts = url.split(":");
         if (parts.length != 5) {
-            throw new SQLException("url must be of form \"jdbc:claimvantage:force:<un>:<pw>\""
-                    + " where <un> is a Force.com User name and <pw> is the corresponding Force.com Password"
-                    + " including the security token");
+            throw new SQLException("url must be of form \"jdbc:claimvantage:force:<un>:<pw>\" where <un> is a"
+                    + " Force.com User name and <pw> is the corresponding Force.com Password including the security"
+                    + " token");
         }
         String un = parts[3];
         String pw = parts[4];
 
         ResultSetFactory factory;
         try {
-            Service service = new Service(un, pw);
+            Service service = new Service(un, pw, new Filter(info));
             factory = service.createResultSetFactory();
         } catch (Exception e) {
             StringWriter sw = new StringWriter();
@@ -49,7 +49,7 @@ public class ForceMetaDataDriver implements Driver {
     }
 
     public int getMinorVersion() {
-        return 0;
+        return 1;
     }
 
     public DriverPropertyInfo[] getPropertyInfo(String url, Properties info)

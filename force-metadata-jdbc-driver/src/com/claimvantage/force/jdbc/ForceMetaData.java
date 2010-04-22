@@ -18,7 +18,7 @@ public class ForceMetaData implements DatabaseMetaData {
     }
 
     public String getDriverVersion() throws SQLException {
-        return "1.0";
+        return "1.1";
     }
     
     public String getDatabaseProductName() throws SQLException {

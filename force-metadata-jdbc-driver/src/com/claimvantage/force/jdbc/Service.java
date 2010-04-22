@@ -28,10 +28,13 @@ import com.sforce.soap.enterprise.fault.UnexpectedErrorFault;
  */
 public class Service {
     
+    private Filter filter;
     private SoapBindingStub binding;
 
-    public Service(String un, String pw) throws ServiceException, UnexpectedErrorFault,
+    public Service(String un, String pw, Filter filter) throws ServiceException, UnexpectedErrorFault,
             InvalidIdFault, LoginFault, RemoteException {
+        
+        this.filter = filter;
 
         binding = (SoapBindingStub) new SforceServiceLocator().getSoap();
         binding.setTimeout(60000);
@@ -41,65 +44,74 @@ public class Service {
         SessionHeader sh = new SessionHeader();
         sh.setSessionId(loginResult.getSessionId());
         binding.setHeader(new SforceServiceLocator().getServiceName().getNamespaceURI(), "SessionHeader", sh);
-
     }
     
     /**
-     * Grab the describe data and return it wrapped in a factory.
+     * Grab the describe data and return it wrapped in a factory.r
      */
     public ResultSetFactory createResultSetFactory() throws InvalidSObjectFault, UnexpectedErrorFault, RemoteException {
         
         ResultSetFactory factory = new ResultSetFactory();
-
-        DescribeSObjectResult[] sobs = binding.describeSObjects(getSObjectTypes());
-        if (sobs != null) {
-            
-            Map<String, String> childReferences = new HashMap<String, String>();
-            for (DescribeSObjectResult sob : sobs) {
-                ChildRelationship[] crs = sob.getChildRelationships();
-                for (ChildRelationship cr : crs) {
-                    childReferences.put(cr.getChildSObject() + '.' + cr.getField(), cr.getRelationshipName());
-                }
-            }
-            
-            for (DescribeSObjectResult sob : sobs) {
-
-                Field[] fields = sob.getFields();
-                List<Column> columns = new ArrayList<Column>(fields.length);
-                for (Field field : fields) {
-                    if (keep(field)) {
-                        Column column = new Column(field.getName(), getType(field));
-                        columns.add(column);
-
-                        column.setLength(getLength(field));
-                        
-                        if ("reference".equals(field.getType().toString())) {
-                            String childReference = childReferences.get(sob.getName() + "." + field.getName());
-                            if (childReference != null) {
-                                column.setComments("Referenced: " + childReference);
-                            }
-                        } else {
-                            column.setComments(getPicklistValues(field.getPicklistValues()));
-                        }
-                        
-                        // Booleans have this as false so not too helpful; leave off
-                        column.setNillable(false);
-                        
-                        // NB Not implemented; see comment in ResultSetFactory class
-                        column.setCalculated(field.isCalculated() || field.isAutoNumber());
-                        
-                        String[] referenceTos = field.getReferenceTo();
-                        if (referenceTos != null) {
-                            for (String referenceTo : referenceTos) {
-                                column.setReferencedTable(referenceTo);
-                                column.setReferencedColumn("Id");
-                            }
+        Map<String, String> childReferences = new HashMap<String, String>();
+        List<String[]> batchedTypes = getBatchedSObjectTypes();
+        
+        // Need all child references so run through the batches first
+        for (String[] types : batchedTypes) {
+            DescribeSObjectResult[] sobs = binding.describeSObjects(types);
+            if (sobs != null) {
+                for (DescribeSObjectResult sob : sobs) {
+                    ChildRelationship[] crs = sob.getChildRelationships();
+                    if (crs != null) {
+                        for (ChildRelationship cr : crs) {
+                            childReferences.put(cr.getChildSObject() + '.' + cr.getField(), cr.getRelationshipName());
                         }
                     }
                 }
+            }
+        }
 
-                Table table = new Table(sob.getName(), getRecordTypes(sob.getRecordTypeInfos()), columns);
-                factory.addTable(table);
+        // Run through the batches again now the child references are available
+        for (String[] types : batchedTypes) {
+            DescribeSObjectResult[] sobs = binding.describeSObjects(types);
+            if (sobs != null) {
+                for (DescribeSObjectResult sob : sobs) {
+                    Field[] fields = sob.getFields();
+                    List<Column> columns = new ArrayList<Column>(fields.length);
+                    for (Field field : fields) {
+                        if (keep(field)) {
+                            Column column = new Column(field.getName(), getType(field));
+                            columns.add(column);
+
+                            column.setLength(getLength(field));
+                            
+                            if ("reference".equals(field.getType().toString())) {
+                                String childReference = childReferences.get(sob.getName() + "." + field.getName());
+                                if (childReference != null) {
+                                    column.setComments("Referenced: " + childReference);
+                                }
+                            } else {
+                                column.setComments(getPicklistValues(field.getPicklistValues()));
+                            }
+                            
+                            // Booleans have this as false so not too helpful; leave off
+                            column.setNillable(false);
+                            
+                            // NB Not implemented; see comment in ResultSetFactory class
+                            column.setCalculated(field.isCalculated() || field.isAutoNumber());
+                            
+                            String[] referenceTos = field.getReferenceTo();
+                            if (referenceTos != null) {
+                                for (String referenceTo : referenceTos) {
+                                    column.setReferencedTable(referenceTo);
+                                    column.setReferencedColumn("Id");
+                                }
+                            }
+                        }
+                    }
+    
+                    Table table = new Table(sob.getName(), getRecordTypes(sob.getRecordTypeInfos()), columns);
+                    factory.addTable(table);
+                }
             }
         }
         
@@ -162,7 +174,29 @@ public class Service {
         return null;
     }
     
-    private String[] getSObjectTypes() throws UnexpectedErrorFault, RemoteException {
+    // Avoid EXCEEDED_MAX_TYPES_LIMIT on call by breaking into batches
+    private List<String[]> getBatchedSObjectTypes() throws UnexpectedErrorFault, RemoteException {
+        
+        List<String> types = getSObjectTypes();
+        List<String[]> batchedTypes = new ArrayList<String[]>();
+        
+        final int batchSize = 100;
+        for (int batch = 0; batch < (types.size() + batchSize - 1) / batchSize; batch++) {
+            int from = batch * batchSize;
+            int to = (batch + 1) * batchSize;
+            if (to > types.size()) {
+                to = types.size();
+            }
+            List<String> t = types.subList(from, to);
+            String[] a = new String[t.size()];
+            t.toArray(a);
+            batchedTypes.add(a);
+        }
+        
+        return batchedTypes;
+    }
+    
+    private List<String> getSObjectTypes() throws UnexpectedErrorFault, RemoteException {
         
         DescribeGlobalSObjectResult[] sobs = binding.describeGlobal().getSobjects();
         
@@ -172,19 +206,18 @@ public class Service {
                 list.add(sob.getName());
             }
         }
-        String[] array = new String[list.size()];
-        list.toArray(array);
-        return array;
+        return list;
     }
     
     private boolean keep(DescribeGlobalSObjectResult sob) {
-        return sob.isCustom();
+        // Filter tables.
+        // Normally want the User table filtered as all objects are associated with that
+        // so the graphs become a mess and very slow to generate.
+        return filter.accept(sob);
     }
     
     private boolean keep(Field field) {
-        // Leaving out the less interesting standard fields
-        return field.isCustom()
-                || field.getName().equalsIgnoreCase("Id")
-                || field.getName().equalsIgnoreCase("Name");
+        // Keeping all fields
+        return true;
     }
 }
