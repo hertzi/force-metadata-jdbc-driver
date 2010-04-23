@@ -36,12 +36,12 @@ Here are some examples. Note the required backslash and obviously avoid whitespa
 
 == Org URL ==
 
-The default URL used to connect to the Enterprise web service that provides the Force.com metadata is compiled into the code generated from the WSDL. (Here that code is in a jar called generated-sforce-enterprise-18.jar.) Note that the URL must return data that matches the schema elements defined in the WSDL - some care is needed over versioning and so the URL includes a version number part e.g. https://www.salesforce.com/services/Soap/c/18.0.
+The default URL used to connect to the Enterprise web service that provides the Force.com metadata is compiled into the code generated from the WSDL. (Here that code is in a jar called generated-sforce-enterprise-18.jar.) Note that the URL must return data that matches the schema elements defined in the WSDL - some care is needed over versioning and so the URL includes a version number part e.g. {{{https://www.salesforce.com/services/Soap/c/18.0}}}.
 
-However, a different URL is needed to connect to a sandbox URL. From some Force.com documentation https://test.salesforce.com/services/Soap/c/18.0 appears to be an example. To allow alternate URLs to be used version 1.2 of the driver supports this new property:
+However, a different URL is needed to connect to a sandbox URL. From some Force.com documentation {{{https://test.salesforce.com/services/Soap/c/18.0}}} appears to be an example. To allow alternate URLs to be used version 1.2 of the driver supports this new property:
 
 || *Name* || *Values* || *Default* || *Description* ||
-|| url || e.g. https://test.salesforce.com/services/Soap/c/18.0 || taken from the generated web service client jar || the URL to connect to ||
+|| url || e.g. {{{https://test.salesforce.com/services/Soap/c/18.0}}} || taken from the generated web service client jar || the URL to connect to ||
 
 = Ant =
 
