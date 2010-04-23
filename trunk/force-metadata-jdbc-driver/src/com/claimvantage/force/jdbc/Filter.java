@@ -39,8 +39,6 @@ public class Filter {
                 }
             }
         }
-        
-        System.out.println(toString());
     }
     
     private Set<String> createNameSet(String value) {

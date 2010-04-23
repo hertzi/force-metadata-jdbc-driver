@@ -21,9 +21,9 @@ public class ForceMetaDataDriver implements Driver {
         return url.startsWith(URL);
     }
 
-    public Connection connect(String url, Properties info) throws SQLException {
+    public Connection connect(String driverUrl, Properties info) throws SQLException {
 
-        String[] parts = url.split(":");
+        String[] parts = driverUrl.split(":");
         if (parts.length != 5) {
             throw new SQLException("url must be of form \"jdbc:claimvantage:force:<un>:<pw>\" where <un> is a"
                     + " Force.com User name and <pw> is the corresponding Force.com Password including the security"
@@ -31,10 +31,13 @@ public class ForceMetaDataDriver implements Driver {
         }
         String un = parts[3];
         String pw = parts[4];
+        
+        // Optional - set this property to not use the default Force.com login URL
+        String forceUrl = info.getProperty("url");
 
         ResultSetFactory factory;
         try {
-            Service service = new Service(un, pw, new Filter(info));
+            Service service = new Service(un, pw, forceUrl, new Filter(info));
             factory = service.createResultSetFactory();
         } catch (Exception e) {
             StringWriter sw = new StringWriter();

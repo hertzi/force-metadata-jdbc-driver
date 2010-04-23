@@ -33,12 +33,19 @@ public class Service {
     private Filter filter;
     private SoapBindingStub binding;
 
-    public Service(String un, String pw, Filter filter) throws ServiceException, UnexpectedErrorFault,
+    public Service(String un, String pw, String url, Filter filter) throws ServiceException, UnexpectedErrorFault,
             InvalidIdFault, LoginFault, RemoteException {
         
         this.filter = filter;
 
-        binding = (SoapBindingStub) new SforceServiceLocator().getSoap();
+        SforceServiceLocator locator = new SforceServiceLocator();
+        if (url != null) {
+            locator.setSoapEndpointAddress(url);
+        }
+        log("Force.com connection url " + locator.getSoapAddress());
+        log(filter.toString());
+        
+        binding = (SoapBindingStub) locator.getSoap();
         binding.setTimeout(60000);
         
         LoginResult loginResult = binding.login(un, pw);
@@ -46,6 +53,10 @@ public class Service {
         SessionHeader sh = new SessionHeader();
         sh.setSessionId(loginResult.getSessionId());
         binding.setHeader(new SforceServiceLocator().getServiceName().getNamespaceURI(), "SessionHeader", sh);
+    }
+    
+    private void log(String message) {
+        System.out.println("ForceMetaDataDriver: " + message);
     }
     
     /**
