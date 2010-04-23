@@ -8,7 +8,9 @@ Force.com objects are treated as tables and Force.com fields as columns. Picklis
 
 = Options =
 
-The first version of the driver only output data for custom objects for simplicity. The driver (version 1.1) can now output data for all objects in an org. To supplement !SchemaSpy's -i option (which is an inclusion mask), the driver supports these properties:
+The first version of the driver only output data for custom objects for simplicity and version 1.1 of the driver has that behavior by default. But it can now also output data for all objects in an org.
+
+To supplement !SchemaSpy's -i option (which is an inclusion mask), the driver supports these optional properties:
 
 || *Name* || *Values* || *Default* || *Description* ||
 || custom || true or false || "true" || consider custom objects ||
