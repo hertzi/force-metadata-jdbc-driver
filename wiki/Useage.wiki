@@ -41,7 +41,7 @@ The default URL used to connect to the Enterprise web service that provides the 
 However, a different URL is needed to connect to a sandbox URL. From some Force.com documentation {{{https://test.salesforce.com/services/Soap/c/18.0}}} appears to be an example. To allow alternate URLs to be used version 1.2 of the driver supports this new property:
 
 || *Name* || *Values* || *Default* || *Description* ||
-|| url || e.g. {{{https://test.salesforce.com/services/Soap/c/18.0}}} || taken from the generated web service client jar || the URL to connect to ||
+|| url || e.g. {{{https://test.salesforce.com/services/Soap/c/18.0}}} || taken from the generated web service client jar || the URL to use to get the Force.com metadata via the Enterprise web service API ||
 
 See the previous section for how to include this in the -connprops to !SchemaSpy.
 
