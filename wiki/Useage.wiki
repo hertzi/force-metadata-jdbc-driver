@@ -45,7 +45,9 @@ However, a different URL is needed to connect to a sandbox URL. From some Force.
 
 See the previous section for how to include this in the -connprops to !SchemaSpy.
 
-= Ant =
+= Running =
+
+The example here is For Ant; just put the parameters on the command-line and specify all the jars in the -cp argument to run from the command-line.
 
 This assumes that all the Jar files (and force.properties) are in the folder "schemaspy". The arguments set to "fake" are ones that !SchemaSpy insists be present but are not used. The -db and -desc arguments produce text in the output files and so can be changed fairly arbitrarily. The -un and -pw arguments are passed through to the JDBC driver and define the Force.com instance that is connected to. Note that the -pw argument must be made up of both the password and the security token.
 
