@@ -12,11 +12,21 @@ Force.com objects are treated as tables and Force.com fields as columns. Picklis
 
 The first version of the driver only output data for custom objects for simplicity. The driver can now output data for all objects in an org. To supplement !SchemaSpy's -i option (which is an inclusion mask), the driver supports these properties:
 
-|| Name || Values || Default || Purpose ||
-| custom | true or false | "true" | consider custom objects |
-| standard | true or false | "false" | consider standard objects |
-| excludes | comma separated list of object names | "User" | custom or standard object names that are an exact match are excluded (takes priority over includes) |
-| includes | comma separated list of object names | empty | custom or standard object names that are an exact match are included (excludes takes priority) |
+|| *Name* || *Values* || *Default* || *Description* ||
+|| custom || true or false || "true" || consider custom objects ||
+|| standard || true or false || "false" || consider standard objects ||
+|| excludes || comma separated list of object names || "User" || custom or standard object names that are an exact match are excluded (takes priority over includes) ||
+|| includes || comma separated list of object names || empty || custom or standard object names that are an exact match are included (excludes takes priority over this) irrespective of the custom and standard flag settings ||
+
+Note the default exclusion of the *User* object. As all other objects reference this object, the diagrams become dominated by these relationships if the User object is included obscuring the more significant relationships. Generation time also goes up dramatically: the standard objects take a few minutes to generate on my laptop with User excluded but an hour to generate with User included.
+
+Here are some examples. Note the required backslash and obviously avoid whitespace:
+
+|| *SchemaSpy Argument* || *Description* ||
+|| None || All custom objects ||
+|| -connprops standard\=true;custom\=false || All standard objects except the User object ||
+|| -connprops excludes\=;includes\=User || All custom objects and the User object ||
+|| -connprops standard\=false;custom\=false;excludes\=;includes\=User,Task,Event || The User, Task and Event standard objects ||
 
 = Ant =
 
