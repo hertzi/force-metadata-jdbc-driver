@@ -4,6 +4,20 @@
 
 [http://schemaspy.sourceforge.net/ SchemaSpy] is a Java program and so can be run in a variety of ways. Details are given below for using it from Ant. !SchemaSpy itself delegates to the (non-Java) dot executable from [http://www.graphviz.org/ Graphviz] so that needs to be installed on the machine you are running !SchemaSpy on.
 
+= Mapping =
+
+Force.com objects are treated as tables and Force.com fields as columns. Picklist values, record type names and the "to many" relationship name are displayed in the comments column.
+
+= Options =
+
+The first version of the driver only output data for custom objects for simplicity. The driver can now output data for all objects in an org. To supplement !SchemaSpy's -i option (which is an inclusion mask), the driver supports these properties:
+
+|| Name || Values || Default || Purpose ||
+| custom | true or false | "true" | consider custom objects |
+| standard | true or false | "false" | consider standard objects |
+| excludes | comma separated list of object names | "User" | custom or standard object names that are an exact match are excluded (takes priority over includes) |
+| includes | comma separated list of object names | empty | custom or standard object names that are an exact match are included (excludes takes priority) |
+
 = Ant =
 
 This assumes that all the Jar files (and force.properties) are in the folder "schemaspy". The arguments set to "fake" are ones that !SchemaSpy insists be present but are not used. The -db and -desc arguments produce text in the output files and so can be changed fairly arbitrarily. The -un and -pw arguments are passed through to the JDBC driver and define the Force.com instance that is connected to. Note that the -pw argument must be made up of both the password and the security token.
