@@ -3,8 +3,10 @@ package com.claimvantage.force.jdbc;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.xml.rpc.ServiceException;
 
@@ -53,17 +55,21 @@ public class Service {
         
         ResultSetFactory factory = new ResultSetFactory();
         Map<String, String> childReferences = new HashMap<String, String>();
-        List<String[]> batchedTypes = getBatchedSObjectTypes();
+        List<String> typesList = getSObjectTypes();
+        Set<String> typesSet = new HashSet<String>(typesList);
+        List<String[]> batchedTypes = batch(typesList);
         
         // Need all child references so run through the batches first
-        for (String[] types : batchedTypes) {
-            DescribeSObjectResult[] sobs = binding.describeSObjects(types);
+        for (String[] batch : batchedTypes) {
+            DescribeSObjectResult[] sobs = binding.describeSObjects(batch);
             if (sobs != null) {
                 for (DescribeSObjectResult sob : sobs) {
                     ChildRelationship[] crs = sob.getChildRelationships();
                     if (crs != null) {
                         for (ChildRelationship cr : crs) {
-                            childReferences.put(cr.getChildSObject() + '.' + cr.getField(), cr.getRelationshipName());
+                            if (typesSet.contains(cr.getChildSObject())) {
+                                childReferences.put(cr.getChildSObject() + '.' + cr.getField(), cr.getRelationshipName());
+                            }
                         }
                     }
                 }
@@ -71,8 +77,8 @@ public class Service {
         }
 
         // Run through the batches again now the child references are available
-        for (String[] types : batchedTypes) {
-            DescribeSObjectResult[] sobs = binding.describeSObjects(types);
+        for (String[] batch : batchedTypes) {
+            DescribeSObjectResult[] sobs = binding.describeSObjects(batch);
             if (sobs != null) {
                 for (DescribeSObjectResult sob : sobs) {
                     Field[] fields = sob.getFields();
@@ -102,8 +108,10 @@ public class Service {
                             String[] referenceTos = field.getReferenceTo();
                             if (referenceTos != null) {
                                 for (String referenceTo : referenceTos) {
-                                    column.setReferencedTable(referenceTo);
-                                    column.setReferencedColumn("Id");
+                                    if (typesSet.contains(referenceTo)) {
+                                        column.setReferencedTable(referenceTo);
+                                        column.setReferencedColumn("Id");
+                                    }
                                 }
                             }
                         }
@@ -175,9 +183,8 @@ public class Service {
     }
     
     // Avoid EXCEEDED_MAX_TYPES_LIMIT on call by breaking into batches
-    private List<String[]> getBatchedSObjectTypes() throws UnexpectedErrorFault, RemoteException {
-        
-        List<String> types = getSObjectTypes();
+    private List<String[]> batch(List<String> types) throws UnexpectedErrorFault, RemoteException {
+
         List<String[]> batchedTypes = new ArrayList<String[]>();
         
         final int batchSize = 100;
