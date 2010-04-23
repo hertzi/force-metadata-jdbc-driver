@@ -1,4 +1,4 @@
-#summary How to use the JDBC driver with SchemaSpy
+#summary How to use the JDBC driver with SchemaSpy (and mis-spell usage)
 
 = Introduction =
 
