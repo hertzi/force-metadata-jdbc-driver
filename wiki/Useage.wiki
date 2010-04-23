@@ -43,6 +43,8 @@ However, a different URL is needed to connect to a sandbox URL. From some Force.
 || *Name* || *Values* || *Default* || *Description* ||
 || url || e.g. {{{https://test.salesforce.com/services/Soap/c/18.0}}} || taken from the generated web service client jar || the URL to connect to ||
 
+See the previous section for how to include this in the -connprops to !SchemaSpy.
+
 = Ant =
 
 This assumes that all the Jar files (and force.properties) are in the folder "schemaspy". The arguments set to "fake" are ones that !SchemaSpy insists be present but are not used. The -db and -desc arguments produce text in the output files and so can be changed fairly arbitrarily. The -un and -pw arguments are passed through to the JDBC driver and define the Force.com instance that is connected to. Note that the -pw argument must be made up of both the password and the security token.
