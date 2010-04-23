@@ -16,6 +16,11 @@ The first version of the driver only output data for custom objects for simplici
 || excludes || comma separated list of object names || "User" || custom or standard object names that are an exact match are excluded (takes priority over includes) ||
 || includes || comma separated list of object names || empty || custom or standard object names that are an exact match are included (excludes takes priority over this) irrespective of the custom and standard flag settings ||
 
+You can confirm the settings by watching for this standard out output:
+{{{
+Filter [exclusionNames=[user], inclusionNames=[], keepCustom=true, keepStandard=false]
+}}}
+
 Note the default exclusion of the *User* object. As all other objects reference this object, the diagrams become dominated by these relationships if the User object is included obscuring the more significant relationships. Generation time also goes up dramatically: the standard objects take a few minutes to generate on my laptop with User excluded but an hour to generate with User included.
 
 Here are some examples. Note the required backslash and obviously avoid whitespace:
