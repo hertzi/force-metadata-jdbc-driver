@@ -22,7 +22,7 @@ Note the default exclusion of the *User* object. As all other objects reference 
 
 Here are some examples. Note the required backslash and obviously avoid whitespace:
 
-|| *SchemaSpy Argument* || *Description* ||
+|| *!SchemaSpy Argument* || *Description* ||
 || None || All custom objects ||
 || -connprops standard\=true;custom\=false || All standard objects except the User object ||
 || -connprops excludes\=;includes\=User || All custom objects and the User object ||
