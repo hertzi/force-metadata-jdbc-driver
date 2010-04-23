@@ -52,7 +52,7 @@ public class ForceMetaDataDriver implements Driver {
     }
 
     public int getMinorVersion() {
-        return 1;
+        return 2;
     }
 
     public DriverPropertyInfo[] getPropertyInfo(String url, Properties info)
