@@ -17,7 +17,7 @@ To supplement !SchemaSpy's -i option (which is an inclusion mask), the driver su
 || custom || true or false || "true" || consider custom objects ||
 || standard || true or false || "false" || consider standard objects ||
 || excludes || comma separated list of object names || "User" || custom or standard object names that are an exact match are excluded (takes priority over includes) ||
-|| includes || comma separated list of object names || empty || custom or standard object names that are an exact match are included (excludes takes priority over this) irrespective of the custom and standard flag settings ||
+|| includes || comma separated list of object names || Empty || custom or standard object names that are an exact match are included (excludes takes priority over this) irrespective of the custom and standard flag settings ||
 
 You can confirm the settings by watching for this standard out output:
 {{{
