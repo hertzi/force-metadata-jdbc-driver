@@ -63,9 +63,10 @@ public class Service {
      * Grab the describe data and return it wrapped in a factory.r
      */
     public ResultSetFactory createResultSetFactory() throws InvalidSObjectFault, UnexpectedErrorFault, RemoteException {
-        
+
         ResultSetFactory factory = new ResultSetFactory();
-        Map<String, String> childReferences = new HashMap<String, String>();
+        Map<String, String> childParentReferenceNames = new HashMap<String, String>();
+        Map<String, Boolean> childCascadeDeletes = new HashMap<String, Boolean>();
         List<String> typesList = getSObjectTypes();
         Set<String> typesSet = new HashSet<String>(typesList);
         List<String[]> batchedTypes = batch(typesList);
@@ -79,7 +80,9 @@ public class Service {
                     if (crs != null) {
                         for (ChildRelationship cr : crs) {
                             if (typesSet.contains(cr.getChildSObject())) {
-                                childReferences.put(cr.getChildSObject() + '.' + cr.getField(), cr.getRelationshipName());
+                                String qualified = cr.getChildSObject() + '.' + cr.getField();
+                                childParentReferenceNames.put(qualified, cr.getRelationshipName());
+                                childCascadeDeletes.put(qualified, cr.isCascadeDelete());
                             }
                         }
                     }
@@ -102,9 +105,13 @@ public class Service {
                             column.setLength(getLength(field));
                             
                             if ("reference".equals(field.getType().toString())) {
-                                String childReference = childReferences.get(sob.getName() + "." + field.getName());
-                                if (childReference != null) {
-                                    column.setComments("Referenced: " + childReference);
+                                // MasterDetail vs Reference apparently not in API; cascade delete is though
+                                String qualified = sob.getName() + "." + field.getName();
+                                String childParentReferenceName = childParentReferenceNames.get(qualified);
+                                Boolean cascadeDelete = childCascadeDeletes.get(qualified);
+                                if (childParentReferenceName != null && cascadeDelete != null) {
+                                    column.setComments("Referenced: " + childParentReferenceName
+                                            + (cascadeDelete ? " (cascade delete)" : ""));
                                 }
                             } else {
                                 column.setComments(getPicklistValues(field.getPicklistValues()));
