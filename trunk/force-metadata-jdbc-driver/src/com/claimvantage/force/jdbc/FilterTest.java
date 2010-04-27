@@ -4,7 +4,7 @@ import java.util.Properties;
 
 import junit.framework.TestCase;
 
-import com.sforce.soap.enterprise.DescribeGlobalSObjectResult;
+import com.sforce.soap.partner.DescribeGlobalSObjectResult;
 
 public class FilterTest extends TestCase {
 

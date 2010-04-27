@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
 
-import com.sforce.soap.enterprise.DescribeGlobalSObjectResult;
+import com.sforce.soap.partner.DescribeGlobalSObjectResult;
 
 public class Filter {
     
