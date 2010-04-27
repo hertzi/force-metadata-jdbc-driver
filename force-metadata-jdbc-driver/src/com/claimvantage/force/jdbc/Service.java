@@ -10,20 +10,20 @@ import java.util.Set;
 
 import javax.xml.rpc.ServiceException;
 
-import com.sforce.soap.enterprise.ChildRelationship;
-import com.sforce.soap.enterprise.DescribeGlobalSObjectResult;
-import com.sforce.soap.enterprise.DescribeSObjectResult;
-import com.sforce.soap.enterprise.Field;
-import com.sforce.soap.enterprise.LoginResult;
-import com.sforce.soap.enterprise.PicklistEntry;
-import com.sforce.soap.enterprise.RecordTypeInfo;
-import com.sforce.soap.enterprise.SessionHeader;
-import com.sforce.soap.enterprise.SforceServiceLocator;
-import com.sforce.soap.enterprise.SoapBindingStub;
-import com.sforce.soap.enterprise.fault.InvalidIdFault;
-import com.sforce.soap.enterprise.fault.InvalidSObjectFault;
-import com.sforce.soap.enterprise.fault.LoginFault;
-import com.sforce.soap.enterprise.fault.UnexpectedErrorFault;
+import com.sforce.soap.partner.ChildRelationship;
+import com.sforce.soap.partner.DescribeGlobalSObjectResult;
+import com.sforce.soap.partner.DescribeSObjectResult;
+import com.sforce.soap.partner.Field;
+import com.sforce.soap.partner.LoginResult;
+import com.sforce.soap.partner.PicklistEntry;
+import com.sforce.soap.partner.RecordTypeInfo;
+import com.sforce.soap.partner.SessionHeader;
+import com.sforce.soap.partner.SforceServiceLocator;
+import com.sforce.soap.partner.SoapBindingStub;
+import com.sforce.soap.partner.fault.InvalidIdFault;
+import com.sforce.soap.partner.fault.InvalidSObjectFault;
+import com.sforce.soap.partner.fault.LoginFault;
+import com.sforce.soap.partner.fault.UnexpectedErrorFault;
 
 /**
  * Wraps the Force.com describe calls web service outputting simple data objects.
