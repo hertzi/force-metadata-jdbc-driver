@@ -6,7 +6,10 @@
 
 Force.com objects are treated as tables and Force.com fields as columns. Picklist values, record type names and the "to many" relationship name are displayed in the !SchemaSpy comments column.
 
-Versions of the driver before 1.3 used the Enterprise web services API. These instructions have been updated to reflect *version 1.3 of the driver that uses the Partner web services API*. Thanks to asgavrikov for pointing out (see comments) that the Partner API is the appropriate one to use.
+Versions of the driver before 1.3 used the Enterprise web services API. These instructions have been updated to reflect *version 1.3 of the driver that uses the Partner web services API*. Thanks to asgavrikov for pointing out (see comments) that the Partner API is the appropriate one to use. So the jar combinations to use are:
+
+ * force-metadata-jdbc-driver-1.3.jar and later require generated-sforce-partner-*.jar
+ * force-metadata-jdbc-driver-1.2 and earlier require generated-sforce-enterprise-*.jar
 
 = Options =
 
