@@ -11,7 +11,7 @@ These instructions have been updated to reflect *version 1.3 of the driver that 
  * force-metadata-jdbc-driver-1.3.jar and later require generated-sforce-partner-NN.jar
  * force-metadata-jdbc-driver-1.2.jar and earlier require a generated Axis Enterprise web services API jar (no longer provided here)
 
-The jars contained in depends.zip including the Axis jars are required in both cases.
+The jars contained in depends.zip including the Axis jars are required in both cases; see the instructios in the "Running" section.
 
 = Options =
 
