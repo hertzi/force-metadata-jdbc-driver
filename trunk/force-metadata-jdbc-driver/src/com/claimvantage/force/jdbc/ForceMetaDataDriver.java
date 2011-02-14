@@ -4,40 +4,43 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.Connection;
 import java.sql.Driver;
+import java.sql.DriverManager;
 import java.sql.DriverPropertyInfo;
 import java.sql.SQLException;
 import java.util.Properties;
 
 /**
  * A JDBC driver that wraps the Force.com enterprise web service API to obtain
- * enough information for SchemaSpy to be able to create its output.
+ * enough information for SchemaSpy or Open ModelSphere to be able to create their output.
  * So it is just a few methods of DatabaseMetaData that are implemented.
  */
 public class ForceMetaDataDriver implements Driver {
     
-    private static final String URL = "jdbc:claimvantage:force";
+	static {
+	    try {
+	        DriverManager.registerDriver(new ForceMetaDataDriver());
+	    } catch (SQLException e) {
+	        // lame, but better then nothing
+	    	e.printStackTrace();
+	    }
+	}
 
+    private static final String URL = "jdbc:claimvantage:force";
+    
     public boolean acceptsURL(String url) throws SQLException {
         return url.startsWith(URL);
     }
 
     public Connection connect(String driverUrl, Properties info) throws SQLException {
-
-        String[] parts = driverUrl.split(":");
-        if (parts.length != 5) {
-            throw new SQLException("url must be of form \"jdbc:claimvantage:force:<un>:<pw>\" where <un> is a"
-                    + " Force.com User name and <pw> is the corresponding Force.com Password including the security"
-                    + " token");
-        }
-        String un = parts[3];
-        String pw = parts[4];
+        
+        Credentials credentials = new Credentials(driverUrl, info);
         
         // Optional - set this property to not use the default Force.com login URL
-        String forceUrl = info.getProperty("url");
+        String forceUrl = info != null ? info.getProperty("url") : null;
 
         ResultSetFactory factory;
         try {
-            Service service = new Service(un, pw, forceUrl, new Filter(info));
+            Service service = new Service(credentials.getUsername(), credentials.getPassword(), forceUrl, new Filter(info));
             factory = service.createResultSetFactory();
         } catch (Exception e) {
             StringWriter sw = new StringWriter();
@@ -52,7 +55,7 @@ public class ForceMetaDataDriver implements Driver {
     }
 
     public int getMinorVersion() {
-        return 4;
+        return 5;
     }
 
     public DriverPropertyInfo[] getPropertyInfo(String url, Properties info)
