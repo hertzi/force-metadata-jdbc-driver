@@ -3,7 +3,10 @@ package com.claimvantage.force.jdbc;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
+import java.sql.RowIdLifetime;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ForceMetaData implements DatabaseMetaData {
     
@@ -18,7 +21,7 @@ public class ForceMetaData implements DatabaseMetaData {
     }
 
     public String getDriverVersion() throws SQLException {
-        return "1.4";
+        return "1.5";
     }
     
     public String getDatabaseProductName() throws SQLException {
@@ -26,7 +29,7 @@ public class ForceMetaData implements DatabaseMetaData {
     }
 
     public String getDatabaseProductVersion() throws SQLException {
-        return "18";
+        return "20";
     }
     
     public Connection getConnection() throws SQLException {
@@ -71,15 +74,90 @@ public class ForceMetaData implements DatabaseMetaData {
         return " ";
     }
     
+    public boolean allTablesAreSelectable() throws SQLException {
+        return true;
+    }
+    
+    public String getCatalogSeparator() throws SQLException {
+        return "";
+    }
+    
+    public String getCatalogTerm() throws SQLException {
+        return "";
+    }
+    
+    public ResultSet getCatalogs() throws SQLException {
+        return ((ForceConnection) connection).getResultSetFactory().getCatalogs();
+    }
+    
+    public int getDatabaseMajorVersion() throws SQLException {
+        return 20;
+    }
+    
+    public int getDatabaseMinorVersion() throws SQLException {
+        return 0;
+    }
+    
+    public int getDefaultTransactionIsolation() throws SQLException {
+        return 0;
+    }
+    
+    public int getDriverMajorVersion() {
+        return 1;
+    }
+    
+    public int getDriverMinorVersion() {
+        return 5;
+    }
+    
+    public int getJDBCMajorVersion() throws SQLException {
+        // Although Java 1.6 methods have been added, currently compiled to Java 1.5 which is JDBC 3.0
+        return 3;
+    }
+    
+    public int getJDBCMinorVersion() throws SQLException {
+        return 0;
+    }
+    
+    public String getSchemaTerm() throws SQLException {
+        return "SCHEMA";
+    }
+
+    public ResultSet getSchemas() throws SQLException {
+        return ((ForceConnection) connection).getResultSetFactory().getSchemas();
+    }
+
+    public String getSearchStringEscape() throws SQLException {
+        return "\\";
+    }
+    
+    public ResultSet getTableTypes() throws SQLException {
+        List<ColumnMap<String, Object>> maps = new ArrayList<ColumnMap<String, Object>>();
+    
+        ColumnMap<String, Object> map = new ColumnMap<String, Object>();
+        map.put("TABLE", "TABLE");
+        maps.add(map);
+       
+        return new ForceResultSet(maps);
+    }
+    
+    public String getUserName() throws SQLException {
+        return "default";
+    }
+    
+    public boolean isReadOnly() throws SQLException {
+        return true;
+    }
+    
+    public boolean nullsAreSortedLow() throws SQLException {
+        return true;
+    }
+    
     //
     // Not implemented below here
     //
 
     public boolean allProceduresAreCallable() throws SQLException {
-        return false;
-    }
-
-    public boolean allTablesAreSelectable() throws SQLException {
         return false;
     }
 
@@ -110,18 +188,6 @@ public class ForceMetaData implements DatabaseMetaData {
         return null;
     }
 
-    public String getCatalogSeparator() throws SQLException {
-        return null;
-    }
-
-    public String getCatalogTerm() throws SQLException {
-        return null;
-    }
-
-    public ResultSet getCatalogs() throws SQLException {
-        return null;
-    }
-
     public ResultSet getColumnPrivileges(String catalog, String schema,
             String table, String columnNamePattern) throws SQLException {
         return null;
@@ -133,39 +199,9 @@ public class ForceMetaData implements DatabaseMetaData {
         return null;
     }
 
-    public int getDatabaseMajorVersion() throws SQLException {
-        return 0;
-    }
-
-    public int getDatabaseMinorVersion() throws SQLException {
-        return 0;
-    }
-
-    public int getDefaultTransactionIsolation() throws SQLException {
-        return 0;
-    }
-
-    public int getDriverMajorVersion() {
-        return 0;
-    }
-
-    public int getDriverMinorVersion() {
-        return 0;
-    }
-
     public ResultSet getExportedKeys(String catalog, String schema, String table)
             throws SQLException {
         return null;
-    }
-
-    public int getJDBCMajorVersion() throws SQLException {
-
-        return 0;
-    }
-
-    public int getJDBCMinorVersion() throws SQLException {
-
-        return 0;
     }
 
     public int getMaxBinaryLiteralLength() throws SQLException {
@@ -301,21 +337,6 @@ public class ForceMetaData implements DatabaseMetaData {
         return 0;
     }
 
-    public String getSchemaTerm() throws SQLException {
-
-        return null;
-    }
-
-    public ResultSet getSchemas() throws SQLException {
-
-        return null;
-    }
-
-    public String getSearchStringEscape() throws SQLException {
-
-        return null;
-    }
-
     public String getStringFunctions() throws SQLException {
 
         return null;
@@ -344,11 +365,6 @@ public class ForceMetaData implements DatabaseMetaData {
         return null;
     }
 
-    public ResultSet getTableTypes() throws SQLException {
-
-        return null;
-    }
-
     public String getTimeDateFunctions() throws SQLException {
 
         return null;
@@ -356,7 +372,7 @@ public class ForceMetaData implements DatabaseMetaData {
 
     public ResultSet getTypeInfo() throws SQLException {
 
-        return null;
+        return ((ForceConnection) connection).getResultSetFactory().getTypeInfo();
     }
 
     public ResultSet getUDTs(String catalog, String schemaPattern,
@@ -366,11 +382,6 @@ public class ForceMetaData implements DatabaseMetaData {
     }
 
     public String getURL() throws SQLException {
-
-        return null;
-    }
-
-    public String getUserName() throws SQLException {
 
         return null;
     }
@@ -387,11 +398,6 @@ public class ForceMetaData implements DatabaseMetaData {
     }
 
     public boolean isCatalogAtStart() throws SQLException {
-
-        return false;
-    }
-
-    public boolean isReadOnly() throws SQLException {
 
         return false;
     }
@@ -417,11 +423,6 @@ public class ForceMetaData implements DatabaseMetaData {
     }
 
     public boolean nullsAreSortedHigh() throws SQLException {
-
-        return false;
-    }
-
-    public boolean nullsAreSortedLow() throws SQLException {
 
         return false;
     }
@@ -641,7 +642,7 @@ public class ForceMetaData implements DatabaseMetaData {
 
     public boolean supportsMixedCaseIdentifiers() throws SQLException {
 
-        return false;
+        return true;
     }
 
     public boolean supportsMixedCaseQuotedIdentifiers() throws SQLException {
@@ -837,4 +838,48 @@ public class ForceMetaData implements DatabaseMetaData {
         return false;
     }
 
+    public <T> T unwrap(Class<T> iface) throws SQLException {
+
+        return null;
+    }
+
+    public boolean isWrapperFor(Class<?> iface) throws SQLException {
+
+        return false;
+    }
+
+    public RowIdLifetime getRowIdLifetime() throws SQLException {
+
+        return null;
+    }
+
+    public ResultSet getSchemas(String catalog, String schemaPattern) throws SQLException {
+
+        return null;
+    }
+
+    public boolean supportsStoredFunctionsUsingCallSyntax() throws SQLException {
+
+        return false;
+    }
+
+    public boolean autoCommitFailureClosesAllResultSets() throws SQLException {
+
+        return false;
+    }
+
+    public ResultSet getClientInfoProperties() throws SQLException {
+
+        return null;
+    }
+
+    public ResultSet getFunctions(String catalog, String schemaPattern, String functionNamePattern) throws SQLException {
+
+        return null;
+    }
+
+    public ResultSet getFunctionColumns(String catalog, String schemaPattern, String functionNamePattern, String columnNamePattern) throws SQLException {
+
+        return null;
+    }
 }

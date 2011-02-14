@@ -9,23 +9,25 @@ import java.sql.Blob;
 import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.NClob;
 import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
 import java.sql.Ref;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import java.sql.RowId;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
+import java.sql.SQLXML;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Map;
 
 public class ForcePreparedStatement implements PreparedStatement {
 
     public ResultSet executeQuery() throws SQLException {
-        return new ForceResultSet(new ArrayList<Map<String, Object>>());
+        return new ForceResultSet(new ArrayList<ColumnMap<String, Object>>());
     }
 
     //
@@ -367,5 +369,120 @@ public class ForcePreparedStatement implements PreparedStatement {
 
     public void setQueryTimeout(int seconds) throws SQLException {
 
+    }
+
+    public boolean isClosed() throws SQLException {
+
+        return false;
+    }
+
+    public void setPoolable(boolean poolable) throws SQLException {
+
+        
+    }
+
+    public boolean isPoolable() throws SQLException {
+
+        return false;
+    }
+
+    public <T> T unwrap(Class<T> iface) throws SQLException {
+
+        return null;
+    }
+
+    public boolean isWrapperFor(Class<?> iface) throws SQLException {
+
+        return false;
+    }
+
+    public void setRowId(int parameterIndex, RowId x) throws SQLException {
+
+        
+    }
+
+    public void setNString(int parameterIndex, String value) throws SQLException {
+
+        
+    }
+
+    public void setNCharacterStream(int parameterIndex, Reader value, long length) throws SQLException {
+
+        
+    }
+
+    public void setNClob(int parameterIndex, NClob value) throws SQLException {
+
+        
+    }
+
+    public void setClob(int parameterIndex, Reader reader, long length) throws SQLException {
+
+        
+    }
+
+    public void setBlob(int parameterIndex, InputStream inputStream, long length) throws SQLException {
+
+        
+    }
+
+    public void setNClob(int parameterIndex, Reader reader, long length) throws SQLException {
+
+        
+    }
+
+    public void setSQLXML(int parameterIndex, SQLXML xmlObject) throws SQLException {
+
+        
+    }
+
+    public void setAsciiStream(int parameterIndex, InputStream x, long length) throws SQLException {
+
+        
+    }
+
+    public void setBinaryStream(int parameterIndex, InputStream x, long length) throws SQLException {
+
+        
+    }
+
+    public void setCharacterStream(int parameterIndex, Reader reader, long length) throws SQLException {
+
+        
+    }
+
+    public void setAsciiStream(int parameterIndex, InputStream x) throws SQLException {
+
+        
+    }
+
+    public void setBinaryStream(int parameterIndex, InputStream x) throws SQLException {
+
+        
+    }
+
+    public void setCharacterStream(int parameterIndex, Reader reader) throws SQLException {
+
+        
+    }
+
+    public void setNCharacterStream(int parameterIndex, Reader value) throws SQLException {
+
+        
+    }
+
+    public void setClob(int parameterIndex, Reader reader) throws SQLException {
+
+        
+    }
+
+    public void setBlob(int parameterIndex, InputStream inputStream) throws SQLException {
+
+        
+    }
+
+    public void setNClob(int parameterIndex, Reader reader) throws SQLException {
+
+        
     }
 }

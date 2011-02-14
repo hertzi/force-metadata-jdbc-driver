@@ -5,15 +5,14 @@ import java.sql.SQLException;
 
 public class ForceResultSetMetaData implements ResultSetMetaData {
 
+    public String getCatalogName(int column) throws SQLException {
+        return "";
+    }
+    
     //
     // Not implemented below here
     //
     
-    public String getCatalogName(int column) throws SQLException {
-
-        return null;
-    }
-
     public String getColumnClassName(int column) throws SQLException {
 
         return null;
@@ -114,4 +113,13 @@ public class ForceResultSetMetaData implements ResultSetMetaData {
         return false;
     }
 
+    public <T> T unwrap(Class<T> iface) throws SQLException {
+
+        return null;
+    }
+
+    public boolean isWrapperFor(Class<?> iface) throws SQLException {
+
+        return false;
+    }
 }
