@@ -7,13 +7,16 @@ NOT FINISHED YET...
 Here is how to generate the http://schemaspy.sourceforge.net/ SchemaSpy] output for your Force.com org:
 
  * Download the [http://schemaspy.sourceforge.net/ SchemaSpy] jar
+ * Download and install [http://www.graphviz.org/ Graphviz] that is used by SchemaSpy to create the automatically laid out diagrams
  * Download the [http://code.google.com/p/force-metadata-jdbc-driver/downloads/list JDBC driver] jar
  * In the folder that contains these jars just enter this (replacing the arguments that start with "My" with your own values and entering it all on one line):
 {{{
-java -cp schemaSpy_5.0.0.jar:force-metadata-jdbc-driver-2.0.jar net.sourceforge.schemaspy.Main
+java -cp schemaSpy_5.0.0.jar;force-metadata-jdbc-driver-2.0.jar net.sourceforge.schemaspy.Main
         -t force -u fake -p fake -host fake -un MyUserName -pw MyPasswordAndSecurityToken
         -font Arial -fontsize 8 -hq -norows -db MyDbName -desc "Extracted from MyDbName on Force.com" -o doc
 }}}
+
+Except for the -un and -pw arguments these are all standard SchemaSpy arguments that are explained in the[ http://schemaspy.sourceforge.net/ SchemaSpy] web site. The file force.properties is now included in the driver jar and accessed from there. The only change needed for Mac/Unix is the classpath separator changing from ";" to ":".
 
 
 = Details =
