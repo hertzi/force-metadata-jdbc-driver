@@ -34,7 +34,7 @@ More details of how the -connprops can be used including how to change the URL t
 
 = Other =
 
-Thanks to [http://chriswolf.heroku.com/ Chris Wolf] for the discussion that led to this approach. He also contributed the changes required to make the driver work with [http://www.modelsphere.org/ Open ModelSphere] and potentially other tools that require more of the JDBC spec to be implemented than !SchemaSpy does. And the elimination of the non-!SchemaSpy standard -un and -pw arguments.
+Thanks to [http://chriswolf.heroku.com/ Chris Wolf] for the discussion that led to this approach. He also contributed the changes required to make the driver work with [http://www.modelsphere.org/ Open ModelSphere] and potentially other tools that require more of the JDBC spec to be implemented than !SchemaSpy does. And his approach to the user name and password handling eliminated the non-!SchemaSpy standard -un and -pw arguments.
 
 Note that the code is built to work with Java 1.5 so will also work with Java 1.6.
 
