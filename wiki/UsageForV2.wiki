@@ -2,7 +2,9 @@
 
 = Introduction =
 
-NOT FINISHED YET...
+This version of the driver doesn't offer new functionality but is packaged so that it should be easier to use. The single driver jar file is all that is required which contains the driver classes and also all the classes needed to access the Partner WSDL API to get the metadata information from an org.
+
+= Running =
 
 Here is how to generate the [http://schemaspy.sourceforge.net/ SchemaSpy] output for your Force.com org:
 
@@ -27,9 +29,13 @@ On Mac/Unix bash this would need to be:
 {{{
     -connprops excludes\\=\;includes\\=User,Task,Event
 }}}
-More details of how this property can be used are in the [http://code.google.com/p/force-metadata-jdbc-driver/wiki/Useage orignal usage page]. This includes how to change the URL to for example connect to a sandbox org. 
+More details of how this property can be used are in the [http://code.google.com/p/force-metadata-jdbc-driver/wiki/Useage orignal usage page]. This includes how to change the URL to for example connect to a sandbox org.
+
+= Details =
 
 Note that the code is built to work with Java 1.5 so will also work with Java 1.6. This new version of the driver has been tested with:
 
  * !SchemaSpy 5.0.0
  * Graphviz 2.26.3
+
+Instead of the general purpose [http://axis.apache.org/axis/ Axis] web services stack the code is now using the [http://code.google.com/p/sfdc-wsc/ Force.com Web Service Connector (WSC)] web service client stack compiled for Java 1.5.
