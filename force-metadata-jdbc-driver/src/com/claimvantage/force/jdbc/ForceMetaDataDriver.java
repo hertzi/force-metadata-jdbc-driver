@@ -40,7 +40,7 @@ public class ForceMetaDataDriver implements Driver {
 
         ResultSetFactory factory;
         try {
-            Service service = new Service(credentials.getUsername(), credentials.getPassword(), forceUrl, new Filter(info));
+            WscService service = new WscService(credentials.getUsername(), credentials.getPassword(), forceUrl, new Filter(info));
             factory = service.createResultSetFactory();
         } catch (Exception e) {
             StringWriter sw = new StringWriter();
@@ -51,15 +51,14 @@ public class ForceMetaDataDriver implements Driver {
     }
 
     public int getMajorVersion() {
-        return 1;
+        return Versions.DRIVER_MAJOR;
     }
 
     public int getMinorVersion() {
-        return 5;
+        return Versions.DRIVER_MINOR;
     }
 
-    public DriverPropertyInfo[] getPropertyInfo(String url, Properties info)
-            throws SQLException {
+    public DriverPropertyInfo[] getPropertyInfo(String url, Properties info) throws SQLException {
         return new DriverPropertyInfo[] {};
     }
 
