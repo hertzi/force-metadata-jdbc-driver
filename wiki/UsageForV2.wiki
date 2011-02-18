@@ -19,7 +19,7 @@ java -cp schemaSpy_5.0.0.jar;force-metadata-jdbc-driver-2.0.jar net.sourceforge.
     -font Arial -fontsize 8 -hq -norows -o doc -db MyDbName -desc "Extracted from MyDbName on Force.com"
 }}}
 
-Except for the -un and -pw arguments these are all standard !SchemaSpy arguments that are explained in the [http://schemaspy.sourceforge.net/ SchemaSpy] web site. The file force.properties is now included in the driver jar and accessed from there. The only change needed for Mac/Unix is the -cp argument separator changing from ";" to ":".
+Except for the -un and -pw arguments, these are all standard !SchemaSpy arguments that are explained in the [http://schemaspy.sourceforge.net/ SchemaSpy] web site. The file force.properties is now included in the driver jar and accessed from there. The only change needed for Mac/Unix is the -cp argument separator changing from ";" to ":".
 
 By default all custom objects are output. The set of objects that are output can be customized via the -connprops argument. Here is an example that outputs three standard objects in addition to all the custom objects:
 {{{
