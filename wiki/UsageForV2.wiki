@@ -1,4 +1,4 @@
-#summary How to use version 2.x of the driver with SchemaSpy
+#summary How to use version 2.x of the driver with SchemaSpy (not finished yet)
 
 = Introduction =
 
