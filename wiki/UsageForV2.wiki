@@ -33,13 +33,15 @@ More details of how the -connprops can be used including how to change the URL t
 
 = Other =
 
-Note that the code is built to work with Java 1.5 so will also work with Java 1.6. This new version of the driver has been tested with:
+Thanks to [http://chriswolf.heroku.com/ Chris Wolf] for the discussion that led to this approach; he also contributed the changes required to make the driver work with [http://www.modelsphere.org/ Open ModelSphere] and potentially other tools that require more of the JDBC spec to be implemented than !SchemaSpy does.
 
- * !SchemaSpy 5.0.0
- * Graphviz 2.26.3
+Note that the code is built to work with Java 1.5 so will also work with Java 1.6.
+
+This new version of the driver has been tested with:
+
+ * !SchemaSpy 5.0.0/Graphviz 2.26.3
+ * ModelSphere v3.1-912
 
 Instead of the general purpose [http://axis.apache.org/axis/ Axis] web services stack the code is now using the [http://code.google.com/p/sfdc-wsc/ Force.com Web Service Connector (WSC)] web service client stack compiled for Java 1.5. Version 21 of the Partner WSDL API is used.
 
 As this is all just standard Java code it is simple to also run it from Ant; our [http://force201.wordpress.com/2010/03/11/continuous-integration/ continuous integration build] generates the !SchemaSpy model using Ant each time code is checked in.
-
-Thanks to [http://chriswolf.heroku.com/ Chris Wolf] for the discussion that led to this approach; he also contributed the changes required to make the driver work with [http://www.modelsphere.org/ Open ModelSphere] and potentially other tools that require more of the JDBC spec to be implemented than !SchemaSpy does.
