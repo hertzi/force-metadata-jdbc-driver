@@ -21,7 +21,7 @@ public class ForceMetaData implements DatabaseMetaData {
     }
 
     public String getDriverVersion() throws SQLException {
-        return "1.5";
+        return Versions.DRIVER_VERSION;
     }
     
     public String getDatabaseProductName() throws SQLException {
@@ -29,7 +29,7 @@ public class ForceMetaData implements DatabaseMetaData {
     }
 
     public String getDatabaseProductVersion() throws SQLException {
-        return "20";
+        return Versions.DATABASE_PRODUCT_VERSION;
     }
     
     public Connection getConnection() throws SQLException {

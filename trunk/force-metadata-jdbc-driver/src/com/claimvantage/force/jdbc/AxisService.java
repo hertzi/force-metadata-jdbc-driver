@@ -27,13 +27,16 @@ import com.sforce.soap.partner.fault.UnexpectedErrorFault;
 
 /**
  * Wraps the Force.com describe calls web service outputting simple data objects.
+ *
+ * Uses Axis.
  */
-public class Service {
+@Deprecated
+public class AxisService {
     
     private Filter filter;
     private SoapBindingStub binding;
 
-    public Service(String un, String pw, String url, Filter filter) throws ServiceException, UnexpectedErrorFault,
+    public AxisService(String un, String pw, String url, Filter filter) throws ServiceException, UnexpectedErrorFault,
             InvalidIdFault, LoginFault, RemoteException {
         
         this.filter = filter;
