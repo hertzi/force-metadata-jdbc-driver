@@ -29,7 +29,7 @@ On Mac/Unix bash this would need to be:
 {{{
     -connprops excludes\\=\;includes\\=User,Task,Event
 }}}
-More details of how this property can be used are in the [http://code.google.com/p/force-metadata-jdbc-driver/wiki/Useage orignal usage page]. This includes how to change the URL to for example connect to a sandbox org.
+More details of how this property can be used including how to change the URL to for example connect to a sandbox org are in the [http://code.google.com/p/force-metadata-jdbc-driver/wiki/Useage original usage page].
 
 = Details =
 
