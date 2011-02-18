@@ -42,4 +42,4 @@ Instead of the general purpose [http://axis.apache.org/axis/ Axis] web services 
 
 As this is all just standard Java code it is simple to also run it from Ant; our [http://force201.wordpress.com/2010/03/11/continuous-integration/ continuous integration build] generates the !SchemaSpy model using Ant each time code is checked in.
 
-Thanks to [http://chriswolf.heroku.com/ Chris Wolf] for the discussion that led to this approach; he also contributed the changes required to make the driver work with [http://www.modelsphere.org/ Open ModelSphere].
+Thanks to [http://chriswolf.heroku.com/ Chris Wolf] for the discussion that led to this approach; he also contributed the changes required to make the driver work with [http://www.modelsphere.org/ Open ModelSphere] and potentially other tools that require more of the JDBC spec to be implemented than !SchemaSpy does.
