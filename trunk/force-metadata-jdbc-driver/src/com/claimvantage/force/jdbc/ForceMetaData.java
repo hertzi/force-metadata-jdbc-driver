@@ -91,11 +91,11 @@ public class ForceMetaData implements DatabaseMetaData {
     }
     
     public int getDatabaseMajorVersion() throws SQLException {
-        return 20;
+        return Versions.DATABASE_PRODUCT_MAJOR;
     }
     
     public int getDatabaseMinorVersion() throws SQLException {
-        return 0;
+        return Versions.DATABASE_PRODUCT_MINOR;
     }
     
     public int getDefaultTransactionIsolation() throws SQLException {
@@ -103,20 +103,19 @@ public class ForceMetaData implements DatabaseMetaData {
     }
     
     public int getDriverMajorVersion() {
-        return 1;
+        return Versions.DRIVER_MAJOR;
     }
     
     public int getDriverMinorVersion() {
-        return 5;
+        return Versions.DRIVER_MINOR;
     }
     
     public int getJDBCMajorVersion() throws SQLException {
-        // Although Java 1.6 methods have been added, currently compiled to Java 1.5 which is JDBC 3.0
-        return 3;
+        return Versions.JDBC_MAJOR;
     }
     
     public int getJDBCMinorVersion() throws SQLException {
-        return 0;
+        return Versions.JDBC_MINOR;
     }
     
     public String getSchemaTerm() throws SQLException {
