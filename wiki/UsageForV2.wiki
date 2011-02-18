@@ -39,3 +39,5 @@ Note that the code is built to work with Java 1.5 so will also work with Java 1.
  * Graphviz 2.26.3
 
 Instead of the general purpose [http://axis.apache.org/axis/ Axis] web services stack the code is now using the [http://code.google.com/p/sfdc-wsc/ Force.com Web Service Connector (WSC)] web service client stack compiled for Java 1.5.
+
+Thans to [http://chriswolf.heroku.com/ Chris Wolf] for the discussion that led to this apprach.
