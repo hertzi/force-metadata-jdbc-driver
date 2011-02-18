@@ -4,6 +4,8 @@
 
 This version of the driver doesn't offer new functionality but is packaged so that it should be easier to use. A single driver jar file is all that is required; this contains the driver classes and also all the classes needed to access the Partner WSDL API to get the metadata information from an org.
 
+For information on how to use earlier versions see [http://code.google.com/p/force-metadata-jdbc-driver/wiki/Useage Usage].
+
 = Running =
 
 Here is how to generate the [http://schemaspy.sourceforge.net/ SchemaSpy] output for your Force.com org:
