@@ -21,9 +21,9 @@ java -cp schemaSpy_5.0.0.jar;force-metadata-jdbc-driver-2.0.jar net.sourceforge.
 
 Except for the -un and -pw arguments, these are all standard !SchemaSpy arguments that are explained in the [http://schemaspy.sourceforge.net/ SchemaSpy] web site. The file force.properties is now included in the driver jar and accessed from there. The only change needed for Mac/Unix is the -cp argument separator changing from ";" to ":".
 
-By default all custom objects are output. The set of objects that are output can be customized by adding a -connprops argument. Here is an example that outputs three standard objects in addition to all the custom objects:
+By default all custom objects are output. The set of objects that are output can be customized by adding a -connprops argument. Here is an example that outputs five standard objects in addition to all the custom objects:
 {{{
-    -connprops excludes\=;includes\=User,Task,Event
+    -connprops excludes\=;includes\=Account,Contact,User,Task,Event
 }}}
 On Mac/Unix bash this would need to be:
 {{{
