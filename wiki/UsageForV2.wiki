@@ -40,7 +40,7 @@ Note that the code is built to work with Java 1.5 so will also work with Java 1.
 This new version of the driver has been tested with:
 
  * !SchemaSpy 5.0.0/Graphviz 2.26.3
- * ModelSphere v3.1-912
+ * !ModelSphere v3.1-912
 
 Instead of the general purpose [http://axis.apache.org/axis/ Axis] web services stack the code is now using the [http://code.google.com/p/sfdc-wsc/ Force.com Web Service Connector (WSC)] web service client stack compiled for Java 1.5. Version 21 of the Partner WSDL API is used.
 
