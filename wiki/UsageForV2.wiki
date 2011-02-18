@@ -31,5 +31,5 @@ More details of how this property can be used are in the [http://code.google.com
 
 Note that the code is built to work with Java 1.5 so will also work with Java 1.6. This new version of the driver has been test with:
 
- * SchemaSpy 5.0.0
+ * !SchemaSpy 5.0.0
  * Graphviz 2.26.3
