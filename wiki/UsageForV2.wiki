@@ -50,4 +50,4 @@ Instead of the general purpose [http://axis.apache.org/axis/ Axis] web services 
 
 The force.properties file that was separate is now included in the driver jar and accessed in place from there.
 
-As this is all just standard Java code it is simple to also run it from Ant; our [http://force201.wordpress.com/2010/03/11/continuous-integration/ continuous integration build] generates the !SchemaSpy model using Ant each time code is checked in.
+As this is all just standard Java code it is simple to also run it from Ant; or example our [http://force201.wordpress.com/2010/03/11/continuous-integration/ continuous integration build] generates the !SchemaSpy model using Ant each time code is checked in.
