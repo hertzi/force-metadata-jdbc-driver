@@ -11,7 +11,7 @@ This version of the driver doesn't offer new functionality but is packaged so th
 Here is how to generate the [http://schemaspy.sourceforge.net/ SchemaSpy] output for your Force.com org:
 
  * Download the [http://schemaspy.sourceforge.net/ SchemaSpy] jar
- * Download and install [http://www.graphviz.org/ Graphviz] that is used by !SchemaSpy to create the automatically laid out diagrams; multiple platforms including Windows and mac are supported
+ * Download and install [http://www.graphviz.org/ Graphviz] that is used by !SchemaSpy to create the automatically laid out diagrams; multiple platforms including Windows and Mac are supported
  * Download the latest (2.x) version of the [http://code.google.com/p/force-metadata-jdbc-driver/downloads/list Force Metadata JDBC driver] jar
  * In the folder that contains the jars just enter this (replacing the arguments that start with "My" with your own values and entering it all on one line):
 
