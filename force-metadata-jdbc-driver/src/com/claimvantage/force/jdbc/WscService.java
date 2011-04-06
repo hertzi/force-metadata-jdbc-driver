@@ -96,6 +96,23 @@ public class WscService {
 
                             column.setLength(getLength(field));
 
+                            List<String> comments = new ArrayList<String>();
+                            if (field.getLabel() != null) {
+                                comments.add("Label: " + field.getLabel());
+                            }
+                            if (field.getDefaultValueFormula() != null) {
+                                comments.add("Default: " + field.getDefaultValueFormula());
+                            }
+                            if (field.getCalculatedFormula() != null) {
+                                comments.add("Formula: " + field.getCalculatedFormula());
+                            }
+                            if (field.getInlineHelpText() != null) {
+                                comments.add("Help: " + field.getInlineHelpText());
+                            }
+                            String picklist = getPicklistValues(field.getPicklistValues());
+                            if (picklist != null) {
+                                comments.add("Picklist: " + picklist);
+                            }
                             if ("reference".equals(field.getType().toString())) {
                                 // MasterDetail vs Reference apparently not
                                 // in API; cascade delete is though
@@ -103,12 +120,11 @@ public class WscService {
                                 String childParentReferenceName = childParentReferenceNames.get(qualified);
                                 Boolean cascadeDelete = childCascadeDeletes.get(qualified);
                                 if (childParentReferenceName != null && cascadeDelete != null) {
-                                    column.setComments("Referenced: " + childParentReferenceName + (cascadeDelete ? " (cascade delete)" : ""));
+                                    comments.add("Referenced: " + childParentReferenceName + (cascadeDelete ? " (cascade delete)" : ""));
                                 }
-                            } else {
-                                column.setComments(getPicklistValues(field.getPicklistValues()));
                             }
-
+                            column.setComments(separate(comments, "\n"));
+                            
                             // Booleans have this as false so not too
                             // helpful; leave off
                             column.setNillable(false);
@@ -128,8 +144,15 @@ public class WscService {
                             }
                         }
                     }
+                    
+                    List<String> comments = new ArrayList<String>();
+                    comments.add("Labels: " + sob.getLabel() + " | " + sob.getLabelPlural());
+                    String recordTypes = getRecordTypes(sob.getRecordTypeInfos());
+                    if (recordTypes != null) {
+                        comments.add("Record Types: " + recordTypes);
+                    }
 
-                    Table table = new Table(sob.getName(), getRecordTypes(sob.getRecordTypeInfos()), columns);
+                    Table table = new Table(sob.getName(), separate(comments, "\n"), columns);
                     factory.addTable(table);
                 }
             }
@@ -140,6 +163,10 @@ public class WscService {
 
     private String getType(Field field) {
         String s = field.getType().toString();
+        // WSC adds this prefix for some types
+        if (s.startsWith("_")) {
+            s = s.substring("_".length());
+        }
         return s.equalsIgnoreCase("double") ? "decimal" : s;
     }
 
@@ -157,38 +184,31 @@ public class WscService {
             return 0;
         }
     }
-
+    
     private String getPicklistValues(PicklistEntry[] entries) {
         if (entries != null && entries.length > 0) {
-            StringBuilder sb = new StringBuilder(256);
+            List<String> values = new ArrayList<String>(128);
             for (PicklistEntry entry : entries) {
-                if (sb.length() > 0) {
-                    sb.append(" | ");
-                }
-                sb.append(entry.getValue());
+                values.add(entry.getValue());
             }
-            return "Picklist: " + sb.toString();
+            if (values.size() > 0) {
+                return separate(values, " | ");
+            }
         }
         return null;
     }
 
     private String getRecordTypes(RecordTypeInfo[] rts) {
         if (rts != null && rts.length > 0) {
-            StringBuilder sb = new StringBuilder(256);
+            List<String> values = new ArrayList<String>(16);
             for (RecordTypeInfo rt : rts) {
                 // Master always present
                 if (!rt.getName().equalsIgnoreCase("Master")) {
-                    if (sb.length() > 0) {
-                        sb.append(" | ");
-                    }
-                    sb.append(rt.getName());
-                    if (rt.isDefaultRecordTypeMapping()) {
-                        sb.append(" (default)");
-                    }
+                    values.add(rt.getName() + (rt.isDefaultRecordTypeMapping() ? " (default)" : ""));
                 }
             }
-            if (sb.length() > 0) {
-                return "Record Types: " + sb.toString();
+            if (values.size() > 0) {
+                return separate(values, " | ");
             }
         }
         return null;
@@ -238,5 +258,16 @@ public class WscService {
     private boolean keep(Field field) {
         // Keeping all fields
         return true;
+    }
+    
+    private String separate(List<String> terms, String separator) {
+        StringBuilder sb = new StringBuilder(2048);
+        for (String term : terms) {
+            if (sb.length() > 0) {
+                sb.append(separator);
+            }
+            sb.append(term);
+        }
+        return sb.toString();
     }
 }
