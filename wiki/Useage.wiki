@@ -48,7 +48,7 @@ The default URL used to connect to the Partner web service that provides the For
 However, a different URL is needed to connect to a sandbox URL. To allow alternate URLs to be used version 1.2 of the driver supports this new property:
 
 || *Name* || *Values* || *Default* || *Description* ||
-|| url || e.g. {{{https://test.salesforce.com/services/Soap/u/18.0}}} || taken from the generated web service client jar || the URL to use to get the Force.com metadata via the Partner web service API ||
+|| url || e.g. {{{https://test.salesforce.com/services/Soap/u/18.0}}} || taken from the generated web service client jar || the URL (but not the property name is in lower case) to use to get the Force.com metadata via the Partner web service API ||
 
 See the previous section for how to include this in the -connprops to !SchemaSpy.
 
