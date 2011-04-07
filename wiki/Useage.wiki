@@ -52,6 +52,11 @@ However, a different URL is needed to connect to a sandbox URL. To allow alterna
 
 See the previous section for how to include this in the -connprops to !SchemaSpy.
 
+Note that the property name is *url* (lowercase) not URL (uppercase) and you should see the supplied value echoed to standard output like this if the value is correctly specified:
+{{{
+ForceMetaDataDriver: Force.com connection url https://test.salesforce.com/services/Soap/u/21.0
+}}}
+
 = Running =
 
 The example here is For Ant; just put the parameters on the command-line and specify all the jars in the -cp argument to run from the command-line. (See the comments below.) 
