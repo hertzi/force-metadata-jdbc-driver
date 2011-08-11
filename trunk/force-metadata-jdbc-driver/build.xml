@@ -2,7 +2,7 @@
 <project name="project">
 
     <target name="jar">
-        <jar destfile="force-metadata-jdbc-driver-2.1.jar">
+        <jar destfile="force-metadata-jdbc-driver-2.2.jar">
             
             <!-- Driver classes -->
             <fileset dir="bin"/>
