@@ -25,14 +25,27 @@ import com.sforce.ws.ConnectorConfig;
  */
 public class WscService {
 
-    private Filter filter;
-    private PartnerConnection partnerConnection;
+    private final Filter filter;
+    private final PartnerConnection partnerConnection;
 
     public WscService(String un, String pw, String url, Filter filter) throws ConnectionException {
 
         this.filter = filter;
 
         ConnectorConfig partnerConfig = new ConnectorConfig();
+
+        if (System.getProperty("http.auth.ntlm.domain") != null) {
+            partnerConfig.setNtlmDomain(System.getProperty("http.auth.ntlm.domain"));
+        }
+        if ((System.getProperty("http.proxyHost") != null) && (System.getProperty("http.proxyPort") != null)) {
+            partnerConfig.setProxy(System.getProperty("http.proxyHost"), Integer.parseInt(System.getProperty("http.proxyPort")));
+        }
+        if (System.getProperty("http.proxyUser") != null) {
+            partnerConfig.setProxyUsername(System.getProperty("http.proxyUser"));
+        }
+        if (System.getProperty("http.proxyPassword") != null) {
+            partnerConfig.setProxyPassword(System.getProperty("http.proxyPassword"));
+        }
 
         partnerConfig.setUsername(un);
         partnerConfig.setPassword(pw);
@@ -54,15 +67,15 @@ public class WscService {
     /**
      * Grab the describe data and return it wrapped in a factory.
      */
-    public ResultSetFactory createResultSetFactory() throws ConnectionException  {
+    public ResultSetFactory createResultSetFactory() throws ConnectionException {
 
         ResultSetFactory factory = new ResultSetFactory();
         Map<String, String> childParentReferenceNames = new HashMap<String, String>();
         Map<String, Boolean> childCascadeDeletes = new HashMap<String, Boolean>();
         List<String> typesList = getSObjectTypes();
-        Set<String>typesSet = new HashSet<String>(typesList);
+        Set<String> typesSet = new HashSet<String>(typesList);
         List<String[]> batchedTypes = batch(typesList);
-        
+
         // Need all child references so run through the batches first
         for (String[] batch : batchedTypes) {
             DescribeSObjectResult[] sobs = partnerConnection.describeSObjects(batch);
@@ -124,7 +137,7 @@ public class WscService {
                                 }
                             }
                             column.setComments(separate(comments, "\n"));
-                            
+
                             // Booleans have this as false so not too
                             // helpful; leave off
                             column.setNillable(false);
@@ -144,7 +157,7 @@ public class WscService {
                             }
                         }
                     }
-                    
+
                     List<String> comments = new ArrayList<String>();
                     comments.add("Labels: " + sob.getLabel() + " | " + sob.getLabelPlural());
                     String recordTypes = getRecordTypes(sob.getRecordTypeInfos());
@@ -184,7 +197,7 @@ public class WscService {
             return 0;
         }
     }
-    
+
     private String getPicklistValues(PicklistEntry[] entries) {
         if (entries != null && entries.length > 0) {
             List<String> values = new ArrayList<String>(128);
@@ -259,7 +272,7 @@ public class WscService {
         // Keeping all fields
         return true;
     }
-    
+
     private String separate(List<String> terms, String separator) {
         StringBuilder sb = new StringBuilder(2048);
         for (String term : terms) {
